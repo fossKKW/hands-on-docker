@@ -48,7 +48,7 @@ def create_task(task:str):
             conn.close()
 
 
-def delete_task(id:int):
+def delete_task_db(id:int):
     conn = get_db_connection()
     if conn:
         cur = conn.cursor()
