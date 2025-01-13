@@ -16,8 +16,8 @@
         <ul>
             {% for task in tasks %}
             <li>
-                {{ loop.index }}. {{ task }}
-                <a href="/delete/{{ loop.index0 }}" class="delete">Delete</a>
+                {{ task[0] }}. {{ task[1] }}
+                <a href="/delete/{{ task[0] }}" class="delete">Delete</a>
             </li>
             {% endfor %}
         </ul>
