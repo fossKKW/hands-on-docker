@@ -3,7 +3,7 @@ from psycopg2.extras import RealDictCursor
 
 def get_db_connection():
     try: 
-        connection = psycopg2.connect(host="localhost", database="docker", user="postgres", password="0104", cursor_factory=RealDictCursor)
+        connection = psycopg2.connect(host="localhost", database="docker", user="--USERNAME--", password="--Password--", port="5432", cursor_factory=RealDictCursor)
         cur = connection.cursor()
         print(f"Database connected")
         cur.execute("""
@@ -13,7 +13,8 @@ def get_db_connection():
             );
         """)
         table_exists = cur.fetchone()
-        if not table_exists:
+        print(f"table exists: {table_exists}")
+        if not table_exists["exists"]:
             cur.execute("""
                 CREATE TABLE todo (
                     id SERIAL PRIMARY KEY,
@@ -36,7 +37,7 @@ def create_task(task:str):
     if conn:
         cur = conn.cursor()
         try:
-            cur.execute("""INSERT INTO public.todo (task) VALUES (%s) RETURNING *;""", (task,))
+            cur.execute("""INSERT INTO todo (task) VALUES (%s) RETURNING *;""", (task,))
             new_task = cur.fetchone()
             conn.commit()
             return new_task
@@ -53,7 +54,7 @@ def delete_task_db(id:int):
     if conn:
         cur = conn.cursor()
         try:
-            cur.execute("""DELETE FROM public.todo WHERE id=%s RETURNING *;""", (str(id), ))
+            cur.execute("""DELETE FROM todo WHERE id=%s RETURNING *;""", (str(id), ))
             deleted_task = cur.fetchone()
             conn.commit()
             return deleted_task
