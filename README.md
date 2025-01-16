@@ -30,3 +30,41 @@ docker run -d -p 8000:80 docker/welcome-to-docker
 ```
 
 Open [localhost](http://localhost:8000/) to view the frontend of the containerized application.
+
+## What are Docker Container?
+
+## What are Images?
+
+## Build your first Image
+
+## Understanding registries and pushing your first image to Dockerhub
+
+## Docker Basics 
+
+### Understanding Docker Containers
+
+### Understanding Docker Images
+
+### What is Docker compose?
+
+## Learning more about Images
+
+### What are Dockerfiles?
+
+### Docker Image Layers
+
+### Build an Image
+
+### Multi-stage builds
+
+### Build cache
+
+## Learning more about Containers
+
+### Know more about ports
+
+### Container defaults
+
+### Share data with container
+
+### Multi-container applications
