@@ -48,16 +48,7 @@ Open [localhost](http://localhost:8000/) to view the frontend of the containeriz
 ### What is Docker compose?
 
 ---
-type: Page
-title: Docker Session
-description: null
-icon: null
-createdAt: '2025-01-15T19:19:45.490Z'
-creationDate: 2025-01-16 00:49
-modificationDate: 2025-01-16 16:31
-tags: []
-coverImage: null
----
+
 
 # Understanding image layers
 
@@ -89,7 +80,7 @@ docker ps -a
 
 your output will look like this :- 
 
-[Screenshot from 2025-01-16 14-10-09](https://app.capacities.io/c4aeec86-9b73-4a6a-957d-a01eb5abc119/ac850266-5cde-42a7-a595-980d5ea6b424)
+[Screenshot from 2025-01-16 14-10-09](/app/static/download.png)
 
 copy the container id 
 
@@ -102,7 +93,7 @@ docker image ls
 docker history <new image name>
 ```
 
-[Screenshot from 2025-01-16 14-15-11](https://app.capacities.io/c4aeec86-9b73-4a6a-957d-a01eb5abc119/d59c0ea0-3a61-4613-9d19-7fdcd63ba7ea)
+[Screenshot from 2025-01-16 14-15-11](/app/static/download%20(1).png)
 
 The 53.9 mb which is added is due to the "apt-get update && upgrade" and the "apt-get install curl" commands, because those made changes to various files and also downlaoded some files as a result a new image layer got created for that.
 
@@ -116,11 +107,11 @@ First let's see how our Image layers would look like :-
 
 
 
-[container_image_layers](https://app.capacities.io/c4aeec86-9b73-4a6a-957d-a01eb5abc119/3564521a-92d3-43ee-a971-0c763771e85c)
+[container_image_layers](/app/static/container_image_layer_reuse.webp)
 
 This is beneficial because it allows layers to be reused between images. For example, imagine you wanted to create another Python application. Due to layering, you can leverage the same Python base.
 
-[container_image_layer_reuse](https://app.capacities.io/c4aeec86-9b73-4a6a-957d-a01eb5abc119/e1112121-0f65-4c8b-ba39-b3a11d760e3f)
+[container_image_layer_reuse](/app/static/container_image_layers.webp)
 
 Now let's create a simple python script/app image, execute the following commands step by step :- 
 
