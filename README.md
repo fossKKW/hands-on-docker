@@ -80,7 +80,7 @@ docker ps -a
 
 your output will look like this :- 
 
-[Screenshot from 2025-01-16 14-10-09](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/download.png?raw=true)
+![Screenshot from 2025-01-16 14-10-09](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/download.png?raw=true)
 
 copy the container id 
 
@@ -93,7 +93,7 @@ docker image ls
 docker history <new image name>
 ```
 
-[Screenshot from 2025-01-16 14-15-11](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/download%20(1).png?raw=true)
+![Screenshot from 2025-01-16 14-15-11](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/download%20(1).png?raw=true)
 
 The 53.9 mb which is added is due to the "apt-get update && upgrade" and the "apt-get install curl" commands, because those made changes to various files and also downlaoded some files as a result a new image layer got created for that.
 
@@ -107,11 +107,11 @@ First let's see how our Image layers would look like :-
 
 
 
-[container_image_layers](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/container_image_layer_reuse.webp?raw=true)
+![container_image_layers](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/container_image_layer_reuse.webp?raw=true)
 
 This is beneficial because it allows layers to be reused between images. For example, imagine you wanted to create another Python application. Due to layering, you can leverage the same Python base.
 
-[container_image_layer_reuse](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/container_image_layers.webp?raw=true)
+![container_image_layer_reuse](https://github.com/fossKKW/hands-on-docker/blob/main/app/static/container_image_layers.webp?raw=true)
 
 Now let's create a simple python script/app image, execute the following commands step by step :- 
 
