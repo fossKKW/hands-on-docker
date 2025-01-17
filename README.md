@@ -74,7 +74,7 @@ exit
 docker ps -a
 ```
 
-[Screenshot from 2025-01-17 19-39-04](/app/static/1.png?raw=true)
+![Screenshot from 2025-01-17 19-39-04](/app/static/1.png?raw=true)
 
 now let's see the layers in that image :- 
 
@@ -82,7 +82,7 @@ now let's see the layers in that image :-
 docker history ubuntu
 ```
 
-[Screenshot from 2025-01-17 19-36-38](/app/static/2.png?raw=true)
+![Screenshot from 2025-01-17 19-36-38](/app/static/2.png?raw=true)
 
 The layer with 78.1 mb size stores the ubuntu image, rest of the layers are created by docker to run container and define environment variables. 
 
@@ -109,7 +109,7 @@ docker ps -a
 ```
 
 the output will look like this :- 
-[docker ps -a](/app/static/3.png?raw=true)
+![docker ps -a](/app/static/3.png?raw=true)
 now copy the container id of recently runned image and execute this command to create a new image:-  
 
 ```shell
@@ -120,7 +120,7 @@ docker commit <container id> <new image name>
 docker history <new image name>
 ```
 
-[Screenshot from 2025-01-17 19-40-24](/app/static/4.png?raw=true)
+![Screenshot from 2025-01-17 19-40-24](/app/static/4.png?raw=true)
 
 The 53.9 mb which is added is due to the "apt-get update && upgrade" and the "apt-get install curl" commands, because those made changes to various files and also downloaded some files as a result a new image layer got created for that.
 
@@ -132,11 +132,11 @@ Now one thing to realise is that the chronology in which the image layers should
 
 First let's see how our Image layers would look like :- 
 
-[image](/app/static/5.png?raw=true)
+![image](/app/static/5.png?raw=true)
 
 This is beneficial because it allows layers to be reused between images. For example, imagine you wanted to create another Python application. Due to layering, you can leverage the same Python base.
 
-[image](/app/static/6.png?raw=true)
+![image](/app/static/6.png?raw=true)
 
 Now let's create a simple python script/app image, execute the following commands step by step :- 
 
@@ -224,7 +224,7 @@ docker build -t <your-new-image-name> .
 
 Your output should look like this:- 
 
-[Screenshot from 2025-01-17 20-45-23](/app/static/7.png?raw=true)
+![Screenshot from 2025-01-17 20-45-23](/app/static/7.png?raw=true)
 
 ***Note:- Notice the time it took to build our image. You can see the building time in terminal near the "Building" keyword.***
 
@@ -266,7 +266,7 @@ docker build -t <new-image-name>:<v2> .
 
 Notice the time it took docker to build the image :- 
 
-[Screenshot from 2025-01-17 20-46-17](/app/static/8.png?raw=true)
+![Screenshot from 2025-01-17 20-46-17](/app/static/8.png?raw=true)
 
 The time got largely reduced. How did that happen ? 
 
