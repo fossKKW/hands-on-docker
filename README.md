@@ -7,7 +7,7 @@ To get started with the hands on tutorial make sure you have git and docker inst
 Install Git: [Download Git](https://git-scm.com/downloads)  
 
 Install docker:
-[Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-windows&_gl=1*1uf1m91*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNzAwOS4xMS4wLjA.) | [Linux](https://docs.docker.com/desktop/setup/install/linux/) | [MacOS](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-arm64&_gl=1*1pthec7*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNjk2Ni41NC4wLjA.)
+[Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-windows&_gl=1*1uf1m91*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNzAwOS4xMS4wLjA.) | [Linux](https://docs.docker.com/desktop/setup/install/linux/) | [MacOS](https:   //desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-arm64&_gl=1*1pthec7*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNjk2Ni41NC4wLjA.)
 
 - In case you are new to linux follow this step by step [video](https://www.youtube.com/watch?v=J4dZ2jcpiP0) to install docker on your linux system.
 
@@ -33,11 +33,117 @@ Open [localhost](http://localhost:8000/) to view the frontend of the containeriz
 
 ## What are Docker Container?
 
+Docker containers simply put is an environment which contains everything you need to run you applications with a catch that these are isolated containers meaning they are not affected by external environment or activities.
+
+Let's understand it with an example:  
+Imagine a Library as a container for instance, it has a specific environment which is suitable for concentration and is completely isolated from the external environment. Similarly your application needs a specific environment to run (eg: softwares like python in case of a python app). The docker container bundles all the necessary components/dependencies of your application and runs it in an isolated environment to avoid any potential conflicts.
+
+
+Alright now we know what containers are let's try running one (don't worry later in the tutorial we'll dive deep into running a container.)
+
+Run the below command in your terminal
+```
+docker run -d -p 8080:80 docker/welcome-to-docker
+```
+
+You can check if the container is running by the following command
+```
+docker ps
+```
+
+You should see the below output
+```
+CONTAINER ID   IMAGE                      COMMAND                  CREATED         STATUS         PORTS                                     NAMES
+b05966b0a8cd   docker/welcome-to-docker   "/docker-entrypoint.…"   4 seconds ago   Up 4 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   thirsty_hawking
+```
+
+To access the frontend of the running containerized application go to your [localhost](http://localhost:8080/)
+
+Now you've have a running container, to stop it simply run the below command
+
+```
+docker stop <container-id>
+```
+
 ## What are Images?
 
-## Build your first Image
+Continuing the library example let's think what the library building is made up of i.e: blocks, cement etc In the same way to run a container we need some blocks and cement combined together so that we can establish our building(container). In a simple way docker images all the files and configuration which is required to build our container.  
+
+Simply a container image is a standardized package that includes all of the files, binaries, libraries, and configurations to run a container.
+
+Let's try to look at docker images, run the below command in your terminal:
+```
+docker search docker/welcome-to-docker
+```
+
+You'll see a output like this 
+```
+NAME                                  DESCRIPTION                                     STARS     OFFICIAL
+docker/welcome-to-docker              Docker image for new users getting started w…   42        
+docker/dockerfile                     Official Dockerfile frontend images that ena…   108       
+docker/dockerfile-copy                (deprecated)                                    0         
+docker/docker-bench-security          (deprecated) Docker Bench checks for dozens …   65        
+docker/dockerfile-upstream            Staging version of docker/dockerfile            11        
+```
+
+## Pull your first Image
+
+
+Now copy the very first description and write the following command
+```
+docker pull docker/welcome-to-docker
+```
+
+Run the below command to check the image we just pulled
+```
+docker images
+```
 
 ## Understanding registries and pushing your first image to Dockerhub
+
+Registry is a central location to store all your docker images. But why do we need registries? It's simple to share your docker images.
+
+[Dockerhub](https://hub.docker.com) is the default public registry used to store docker images.
+
+Alright now let's push our first image to dockerhub. To do this make sure you go to dockerhub, create a public repository.
+
+Clone the repo first
+```
+git clone https://github.com/fossKKW/intro-to-registry.git
+```
+
+```
+docker build -t <YOUR_DOCKER_USERNAME>/intro-to-registry .
+```
+
+Run the following command to check verify if the image has successful built
+
+```
+docker images
+```
+
+You should a get a output similar to this 
+```
+REPOSITORY                  TAG       IMAGE ID       CREATED         SIZE
+fosskkw/intro-to-registry   latest    2820c5f68c33   7 seconds ago   137MB
+```
+
+Let's run the container
+```
+sudo docker run -d -p 5000:5000 fosskkw/intro-to-registry
+```
+Check if the container is working by visiting [localhost](http://localhost:5000/)
+
+Let's tag our image (Remember tag is similar to versioning so that we can save different build stages in our application)
+```
+docker tag <YOUR_DOCKER_USERNAME>/intro-to-registry <your-username>/intro-to-registry:1.0 
+```
+
+Now push the image to dockerhub by entering the following command
+```
+docker push <YOUR_DOCKER_USERNAME>/docker-quickstart:1.0
+```
+Now refresh your dockerhub intro-to-registry page and you'll find your recently pushed image.
 
 ## Docker Basics 
 
