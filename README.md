@@ -529,10 +529,86 @@ Each "FROM" word in Dockerfile signifies a stage, everything that follows the "F
 
 ## Learning more about Containers
 
+Okay so now you have pretty good knowledge, let's dive into some simple but important topics
+
 ### Know more about ports
+
+Till now you must have have seen whenever we want to run a container we give `-p` and some number in our command
+
+```
+docker run -d -p HOST_PORT_NUMBER:CONTAINER_PORT_NUMBER <IMAGE_NAME>
+```
+
+So what exactly are ports? It's very simple ports simply are address or communication endpoint which allow devies to communicate over a network. Ports are identified by port numbers.
+
+Let's run the frontend of our url_shortner application. Run the below command
+```
+docker run -d YOUR_DOCKERHUB_USERNAME/url-shortner-frontend:1.0
+```
+
+Let's do
+```
+docker ps
+```
+
+Now how will you access the frontend of your app, so in order to be able to access it and make it available for communication over the internet we expose them to some port number
+
+Run the below command
+```
+docker run -d -p 5173:5173 YOUR_DOCKERHUB_USERNAME/url-shortner-frontend:1.0
+```
+
+Let's do
+```
+docker ps
+```
+Do you see some change? Yes now it is exposed on `port number 5173`
+
+Verify it -> [localhost](http://localhost:5173/)
+
+**NOTE:** Make sure you stop all your containers using `docker stop <CONTAINER_ID>`
 
 ### Container defaults
 
-### Share data with container
+#### Environment Variables
+
+Everything working on some application we'll need to set some environment variable and to access them for you container we need to pass env variables to our container
+
+Setting up environment variables
+```
+docker run -e foo=bar postgres env
+```
+
+Similarly you can pass your `.env` to pass all the environment varibales
+```
+docker run --env-file .env postgres env
+```
+
+#### Create a Custom Network
+
+When you run containers, they automatically connect to a default network called a bridge network. This network works like a virtual bridge, allowing containers on the same host to communicate with each other while staying isolated from the internet and other hosts. It’s a simple and convenient setup for most cases, but in some situations, you might need more control over how the network is configured.
+
+To create a network use the below command 
+```
+docker network create appnetwork
+```
+
+Verify the network
+```
+docker network ls
+```
+
+```
+sudo docker run -d -p 5173:5173 --network appnetwork fosskkw/url-shortner-frontend:1.0
+```
+
+To check if our frontend container is using appnetwork
+```
+sudo docker network inspect appnetwork
+```
+- You'll get a json response check it's containers key and compare it with the container id using `docker ps` command.
 
 ### Multi-container applications
+
+
+
