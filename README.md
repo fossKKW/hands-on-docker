@@ -350,8 +350,6 @@ The 53.9 mb which is added is due to the "apt-get update && upgrade" and the "ap
 
 Now one thing to realise is that the chronology in which the image layers should be created such that the every layer to be created has its dependecy stored in one of the previous layers. e.g. in order to run a python application we should obviously have python in our container and in order to run python we should have python compiler and the list goes on. 
 
-# Let's create an Image of your app
-
 First let's see how our Image layers would look like :- 
 
 ![image](/app/static/5.png?raw=true)
@@ -359,6 +357,8 @@ First let's see how our Image layers would look like :-
 This is beneficial because it allows layers to be reused between images. For example, imagine you wanted to create another Python application. Due to layering, you can leverage the same Python base.
 
 ![image](/app/static/6.png?raw=true)
+
+# Let's create an Image of your app
 
 Now let's create a simple python script/app image, execute the following commands step by step :- 
 
