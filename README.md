@@ -1,4 +1,4 @@
-# hands-on-docker
+ # Hands-on-docker
 
 ### Docker Installation
 
@@ -7,7 +7,7 @@ To get started with the hands on tutorial make sure you have git and docker inst
 Install Git: [Download Git](https://git-scm.com/downloads)  
 
 Install docker:
-[Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-windows&_gl=1*1uf1m91*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNzAwOS4xMS4wLjA.) | [Linux](https://docs.docker.com/desktop/setup/install/linux/) | [MacOS](https:   //desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-arm64&_gl=1*1pthec7*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNjk2Ni41NC4wLjA.)
+[Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-windows&_gl=1*1uf1m91*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNzAwOS4xMS4wLjA.) | [Linux](https://docs.docker.com/desktop/setup/install/linux/) | [MacOS](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-mac-arm64&_gl=1*1pthec7*_gcl_au*MjA4NTE3MDExNi4xNzM3MDA0NzMz*_ga*MzUwNDMzNjA3LjE3MzcwMDQ3MzQ.*_ga_XJWPQMJYHQ*MTczNzAwNDczNC4xLjEuMTczNzAwNjk2Ni41NC4wLjA.)
 
 - In case you are new to linux follow this step by step [video](https://www.youtube.com/watch?v=J4dZ2jcpiP0) to install docker on your linux system.
 
@@ -147,13 +147,129 @@ Now refresh your dockerhub intro-to-registry page and you'll find your recently 
 
 ## Docker Basics 
 
-### Understanding Docker Containers
+### Let's Practice
 
-### Understanding Docker Images
+Alright so far we have seen what are docker images and container, now let's build one image and run a container.
+
+```
+git clone https://github.com/aditya-borse/url_shortener.git
+```
+
+Now go to the repo you've just cloned
+```
+cd url_shortner
+cd frontend
+```
+
+Run the following command
+```
+docker build -t <URL_DOCKERHUB_USERNAME>/url-shortner-frontend:1.0 .
+```
+- Wait for the build to complete
+
+Go back to the parent directory
+```
+cd ..
+```
+
+And now go to the backend dir
+```
+cd backend
+```
+
+Run the below command
+```
+docker build -t <YOUR_DOCKER_USERNAME>/url-shortner-backend:1.0 .
+```
+
+- Wait for the build to complete
+
+Once you have completely build both the images run the below command to verify
+```
+docker images
+```
+
+You should see a output like this
+```
+REPOSITORY                      TAG       IMAGE ID       CREATED              SIZE
+fosskkw/url-shortner-frontend   1.0       0faca2a44923   11 seconds ago       388MB
+fosskkw/url-shortner-backend    1.0       1c273b4551f2   About a minute ago   149MB
+```
+
+Let's run the containers
+
+Run the following command
+```
+sudo docker run -d -p 8000:8000 fosskkw/url-shortner-backend:1.0
+```
+
+```
+sudo docker run -d -p 5173:5173 fosskkw/url-shortner-frontend:1.0
+```
+
+```
+sudo docker run -d -p 6379:6379 redis:alpine
+```
+
+Go to your [localhost](http://localhost:5173/) 
+
+Now stop all the 3 containers
+```
+docker stop <CONTAINER_ID>
+```
+
+Check how much space your images take
+```
+docker system df
+```
+
+You should see something like this
+```
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          3         3         571.5MB   7.834MB (1%)
+Containers      3         3         707.4kB   0B (0%)
+Local Volumes   4         1         176B      176B (100%)
+Build Cache     0         0         0B        0B
+```
+
+Run the below command to free up space
+```
+docker system prune --volumes --all
+```
+
+Now again run `docker system df` and you'll see the below output
+```
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          0         0         0B        0B
+Containers      0         0         0B        0B
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+```
 
 ### What is Docker compose?
 
----
+We just ran 3 container, but what if we have to run 10 containers or more than it's pretty tedious to run individual container using `docker run` command instead we use `docker compose` to run all the container with a single command
+
+To do this we need a YAML file, it will contain all of your containers and their configurations.
+
+If you check your cloned repo it had one `compose.yml` file. For now dw about how to write a docker file and all.
+
+Run the below command
+```
+docker compose up -d
+```
+
+Let's go to [localhost](http://localhost:5173/)
+
+Check the running containers
+```
+docker system ps
+```
+
+Stop the running containers using docker compose
+```
+docker compose down
+```
 
 ### Understanding image layers
 
