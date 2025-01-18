@@ -145,107 +145,6 @@ docker push <YOUR_DOCKER_USERNAME>/docker-quickstart:1.0
 ```
 Now refresh your dockerhub intro-to-registry page and you'll find your recently pushed image.
 
-## Docker Basics 
-
-### Let's Practice
-
-Alright so far we have seen what are docker images and container, now let's build one image and run a container.
-
-```
-git clone https://github.com/aditya-borse/url_shortener.git
-```
-
-Now go to the repo you've just cloned
-```
-cd url_shortner
-cd frontend
-```
-
-Run the following command
-```
-docker build -t <URL_DOCKERHUB_USERNAME>/url-shortner-frontend:1.0 .
-```
-- Wait for the build to complete
-
-Go back to the parent directory
-```
-cd ..
-```
-
-And now go to the backend dir
-```
-cd backend
-```
-
-Run the below command
-```
-docker build -t <YOUR_DOCKER_USERNAME>/url-shortner-backend:1.0 .
-```
-
-- Wait for the build to complete
-
-Once you have completely build both the images run the below command to verify
-```
-docker images
-```
-
-You should see a output like this
-```
-REPOSITORY                      TAG       IMAGE ID       CREATED              SIZE
-fosskkw/url-shortner-frontend   1.0       0faca2a44923   11 seconds ago       388MB
-fosskkw/url-shortner-backend    1.0       1c273b4551f2   About a minute ago   149MB
-```
-
-Let's run the containers
-
-Run the following command
-```
-sudo docker run -d -p 8000:8000 fosskkw/url-shortner-backend:1.0
-```
-
-```
-sudo docker run -d -p 5173:5173 fosskkw/url-shortner-frontend:1.0
-```
-
-```
-sudo docker run -d -p 6379:6379 redis:alpine
-```
-
-Go to your [localhost](http://localhost:5173/) 
-
-Now stop all the 3 containers
-```
-docker stop <CONTAINER_ID>
-```
-
-Check how much space your images take
-```
-docker system df
-```
-
-You should see something like this
-```
-TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
-Images          3         3         571.5MB   7.834MB (1%)
-Containers      3         3         707.4kB   0B (0%)
-Local Volumes   4         1         176B      176B (100%)
-Build Cache     0         0         0B        0B
-```
-
-Run the below command to free up space
-```
-docker system prune --volumes --all
-```
-
-Now again run `docker system df` and you'll see the below output
-```
-TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
-Images          0         0         0B        0B
-Containers      0         0         0B        0B
-Local Volumes   0         0         0B        0B
-Build Cache     0         0         0B        0B
-```
-
 ### What is Docker compose?
 
 We just ran 3 container, but what if we have to run 10 containers or more than it's pretty tedious to run individual container using `docker run` command instead we use `docker compose` to run all the container with a single command
@@ -350,6 +249,8 @@ The 53.9 mb which is added is due to the "apt-get update && upgrade" and the "ap
 
 Now one thing to realise is that the chronology in which the image layers should be created such that the every layer to be created has its dependecy stored in one of the previous layers. e.g. in order to run a python application we should obviously have python in our container and in order to run python we should have python compiler and the list goes on. 
 
+# Let's create an Image of your app
+
 First let's see how our Image layers would look like :- 
 
 ![image](/app/static/5.png?raw=true)
@@ -357,8 +258,6 @@ First let's see how our Image layers would look like :-
 This is beneficial because it allows layers to be reused between images. For example, imagine you wanted to create another Python application. Due to layering, you can leverage the same Python base.
 
 ![image](/app/static/6.png?raw=true)
-
-# Let's create an Image of your app
 
 Now let's create a simple python script/app image, execute the following commands step by step :- 
 
@@ -610,5 +509,105 @@ sudo docker network inspect appnetwork
 
 ### Multi-container applications
 
+Alright so far we have seen what are docker images and container, now let's build one image and run a container.
 
+```
+git clone https://github.com/aditya-borse/url_shortener.git
+```
 
+Now go to the repo you've just cloned
+```
+cd url_shortner
+cd frontend
+```
+
+Run the following command
+```
+docker build -t <URL_DOCKERHUB_USERNAME>/url-shortner-frontend:1.0 .
+```
+- Wait for the build to complete
+
+Go back to the parent directory
+```
+cd ..
+```
+
+And now go to the backend dir
+```
+cd backend
+```
+
+Run the below command
+```
+docker build -t <YOUR_DOCKER_USERNAME>/url-shortner-backend:1.0 .
+```
+
+- Wait for the build to complete
+
+Once you have completely build both the images run the below command to verify
+```
+docker images
+```
+
+You should see a output like this
+```
+REPOSITORY                      TAG       IMAGE ID       CREATED              SIZE
+fosskkw/url-shortner-frontend   1.0       0faca2a44923   11 seconds ago       388MB
+fosskkw/url-shortner-backend    1.0       1c273b4551f2   About a minute ago   149MB
+```
+
+Let's run the containers
+
+Run the following command
+```
+sudo docker run -d -p 8000:8000 fosskkw/url-shortner-backend:1.0
+```
+
+```
+sudo docker run -d -p 5173:5173 fosskkw/url-shortner-frontend:1.0
+```
+
+```
+sudo docker run -d -p 6379:6379 redis:alpine
+```
+
+Go to your [localhost](http://localhost:5173/) 
+
+Now stop all the 3 containers
+```
+docker stop <CONTAINER_ID>
+```
+
+Check how much space your images take
+```
+docker system df
+```
+
+You should see something like this
+```
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          3         3         571.5MB   7.834MB (1%)
+Containers      3         3         707.4kB   0B (0%)
+Local Volumes   4         1         176B      176B (100%)
+Build Cache     0         0         0B        0B
+```
+
+Run the below command to free up space
+```
+docker system prune --volumes --all
+```
+
+Now again run `docker system df` and you'll see the below output
+```
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          0         0         0B        0B
+Containers      0         0         0B        0B
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+```
+
+### Next Steps
+
+Make sure you check out [docker](https://docs.docker.com/get-started/) docs.
+
+Made by [Pranav Ahire](https://github.com/hoipranav) & [Tanmay Gaikwad] (https://github.com/tanmaygaikwad723)
