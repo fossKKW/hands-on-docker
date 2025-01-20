@@ -610,4 +610,4 @@ Build Cache     0         0         0B        0B
 
 Make sure you check out [docker](https://docs.docker.com/get-started/) docs.
 
-Made by [Pranav Ahire](https://github.com/hoipranav) & [Tanmay Gaikwad] (https://github.com/tanmaygaikwad723)
+Made by [Pranav Ahire](https://github.com/hoipranav) & [Tanmay Gaikwad](https://github.com/tanmaygaikwad723)
